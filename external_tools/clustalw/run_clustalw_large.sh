@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
-# Run ClustalW on one alignment OR all pfam_small alignments in batch mode.
-#
-# Single mode (you already have a FASTA file):
-#   ./external_tools/clustalw/run_clustalw.sh <alignment_fasta> <dataset_name> <n_seq>
-#
-# Batch mode (auto-convert Stockholm -> FASTA for all pfam_small):
-#   ./external_tools/clustalw/run_clustalw.sh
-#
 
-set -u   # no -e so one failure doesn't kill the whole batch
+set -u   
 
 # Paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -72,9 +64,6 @@ if [ $# -eq 0 ]; then
   exit 0
 fi
 
-############################################
-# SINGLE MODE — same as your original
-############################################
 if [ $# -ne 3 ]; then
   echo "Usage: $0 <alignment_fasta> <dataset_name> <n_seq>" >&2
   exit 1
