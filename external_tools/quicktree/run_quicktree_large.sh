@@ -1,29 +1,19 @@
 #!/usr/bin/env bash
-# Run QuickTree on one alignment OR on all pfam_small alignments if no args given.
-#
-# Usage:
-#   ./external_tools/quicktree/run_quicktree.sh <alignment_file> <dataset_name> <n_seq>
-# OR batch mode:
-#   ./external_tools/quicktree/run_quicktree.sh
-#
 
-set -u  # NO -e, so batch mode won't exit on first failure
+set -u  
 
-# Determine directories
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 CSV_PATH="${PROJECT_ROOT}/benchmarks/timings_large.csv"
 
 mkdir -p "${PROJECT_ROOT}/benchmarks"
 
-# Ensure CSV has header
+
 if [ ! -f "${CSV_PATH}" ]; then
   echo "dataset,n_seq,tool,real_ms" > "${CSV_PATH}"
 fi
 
-############################################
-# BATCH MODE — NO ARGS
-############################################
+
 if [ $# -eq 0 ]; then
   echo "Running QuickTree in BATCH MODE over pfam_large directory..."
 
@@ -51,9 +41,6 @@ if [ $# -eq 0 ]; then
   exit 0
 fi
 
-############################################
-# SINGLE-FILE MODE (original behavior)
-############################################
 if [ $# -ne 3 ]; then
   echo "Usage: $0 <alignment_file> <dataset_name> <n_seq>" >&2
   exit 1
