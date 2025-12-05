@@ -1,18 +1,9 @@
 #!/usr/bin/env bash
-# Run BioNJ on all small Pfam distance matrices and record timings in timings.csv
-# Matches the style of the ClustalW and QuickTree timing scripts.
 
-set -u   # no -e so one failure doesn't kill the whole batch
+set -u 
 
-########################################
-# Paths
-########################################
-
-# Folder that contains this script: project/external_tools/bionj
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Project root: go two levels up from SCRIPT_DIR
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-# Always run from project root for consistent relative paths
 cd "$PROJECT_ROOT"
 
 BIONJ_BIN="$SCRIPT_DIR/bionj"
@@ -28,10 +19,6 @@ mkdir -p "$TREE_DIR" "$PROJECT_ROOT/benchmarks"
 if [ ! -f "$CSV_PATH" ]; then
   echo "dataset,n_seq,tool,real_ms" > "$CSV_PATH"
 fi
-
-########################################
-# Sanity checks
-########################################
 
 if [ ! -x "$BIONJ_BIN" ]; then
   echo "❌ Error: BioNJ binary not found or not executable at $BIONJ_BIN" >&2
